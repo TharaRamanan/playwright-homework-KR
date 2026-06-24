@@ -15,13 +15,11 @@ test("Validate selected pet types from the list", async({page}) => {
 
     await page.getByRole("button",{name: "Edit Pet"}).click()
     await expect(page.getByRole("heading")).toHaveText("Pet")
-    const ownerName = await (page.locator("#owner_name")).inputValue()
-    //console.log(ownerName)
+
     await expect(page.locator("#owner_name")).toHaveValue("George Franklin")
     await expect(page.locator("#type1")).toHaveValue("cat")
 
     const petTypes = ["cat","dog","lizard","snake","bird","hamster"]
-    
     for(const pet of  petTypes ){
         
         await page.locator("#type").selectOption(pet)
@@ -44,9 +42,14 @@ test("Validate the pet type update", async({page}) => {
 
     await page.getByRole("button",{name: "Update Pet"}).click()
 
+    await expect(page.locator("dl", {hasText: "Rosy"}).locator("dd").nth(2)).toHaveText("bird")
 
-
-
-    
+    await page.getByRole("button",{name: "Edit Pet"}).nth(1).click()
+    await expect(page.locator("#type1")).toHaveValue("bird")
+    await page.locator("#type").selectOption("dog")
+    await expect(page.locator("select")).toHaveValue("dog")
+    await expect(page.locator("#type1")).toHaveValue("dog")
+    await page.getByRole("button",{name: "Update Pet"}).click()
+    await expect(page.locator("dl", {hasText: "Rosy"}).locator("dd").nth(2)).toHaveText("dog")   
 })
 
