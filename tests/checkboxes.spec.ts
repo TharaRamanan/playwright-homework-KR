@@ -35,10 +35,10 @@ test('Select all specialties', async ({page}) => {
     await selectedSpecialties.click()
 
     const allSpecialtiesBoxes = page.getByRole("checkbox")
-    for (const i of await  allSpecialtiesBoxes.all()) {
+    for (const speciality of await  allSpecialtiesBoxes.all()) {
 
-        await i.check()
-        expect(i).toBeChecked()
+        await speciality.check()
+        await expect(speciality).toBeChecked()
     }
     await selectedSpecialties.click()
     await expect(selectedSpecialties).toHaveText("surgery, dentistry, radiology")
@@ -52,13 +52,11 @@ test('Unselect all specialties', async ({page}) => {
 
     await selectedSpecialties.click()
     const allSpecialtiesBoxes = page.getByRole("checkbox")
+    for (const speciality of await  allSpecialtiesBoxes.all()) {
 
-    for (const i of await  allSpecialtiesBoxes.all()) {
-
-        await i.uncheck()
-        await expect(i).not.toBeChecked()
-    }
-    
+        await speciality.uncheck()
+        await expect(speciality).not.toBeChecked()
+    }    
     await expect(selectedSpecialties).toBeEmpty()
 
 })
