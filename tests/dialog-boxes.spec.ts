@@ -8,7 +8,7 @@ test.beforeEach( async({page}) => {
 test('Add and delete Pet type', async ({page}) => {
 
     const newPetTypeSection = page.locator("app-pettype-add")
-    const totalRows = page.locator("table tbody tr")
+
     await expect(page.getByRole('heading')).toHaveText('Pet Types')
     await page.getByRole("button",{name: "Add"}).click()
 
@@ -20,11 +20,15 @@ test('Add and delete Pet type', async ({page}) => {
     await page.getByRole("button",{name: "Save"}).click()
     await page.waitForTimeout(500)  //timeout added for Save action to complete
 
-    const noTotalRows =  await totalRows.count()
-    await expect(page.getByRole("textbox").nth(noTotalRows-1)).toHaveValue("pig")   //to verify last row has the newly added value 'pig'
-    await page.getByRole("button",{name: "Delete"}).nth(noTotalRows-1).click()
-    
-    //page.on('dialog', dialog =>{
-        //dialog.accept()
-   // })
+    await expect(page.getByRole("textbox").last()).toHaveValue("pig") 
+
+    page.on('dialog', dialog =>{
+     expect(dialog.message()).toEqual("Delete the pet type?")
+     dialog.accept() 
+    })  
+
+    await page.getByRole("button",{name: "Delete"}).last().click()
+    await expect(page.getByRole("textbox").last()).not.toHaveValue("pig") 
+
+
 })
