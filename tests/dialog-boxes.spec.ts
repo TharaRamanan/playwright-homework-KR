@@ -14,15 +14,14 @@ test('Add and delete Pet type', async ({page}) => {
 
     await expect(newPetTypeSection.getByRole("heading")).toHaveText("New Pet Type")
     await expect(newPetTypeSection.locator("label")).toHaveText("Name")
-    await expect(newPetTypeSection.locator("#name")).toBeVisible()
+    await expect(newPetTypeSection.getByRole("textbox")).toBeVisible()
 
     await newPetTypeSection.locator("#name").fill("pig")
     await page.getByRole("button",{name: "Save"}).click()
     await page.waitForTimeout(500)  //timeout added for Save action to complete
 
     const noTotalRows =  await totalRows.count()
-    console.log(noTotalRows)
-    await expect(page.getByRole("textbox").nth(noTotalRows-1)).toHaveValue("pig")
+    await expect(page.getByRole("textbox").nth(noTotalRows-1)).toHaveValue("pig")   //to verify last row has the newly added value 'pig'
     await page.getByRole("button",{name: "Delete"}).nth(noTotalRows-1).click()
     
     //page.on('dialog', dialog =>{
