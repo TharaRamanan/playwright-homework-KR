@@ -36,7 +36,16 @@ test("Validate search by last name", async({page})=>{
     else{
     const ownerFullName = await page.getByRole("row",{name: owner}).locator("td").first().textContent()
     expect(ownerFullName).toContain(owner)
-    }
+   }
+}       
+})
 
-    }    
+test("Validate phone number and pet name", async({page})=>{
+    const ownerPhoneNumberField = page.getByRole("row",{name: "6085552765"})
+    const petName = await ownerPhoneNumberField.locator("td").last().textContent()
+    
+    await ownerPhoneNumberField.getByRole("link").click()
+    
+    
+    
 })
