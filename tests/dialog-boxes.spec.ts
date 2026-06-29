@@ -18,7 +18,6 @@ test('Add and delete Pet type', async ({page}) => {
 
     await newPetTypeSection.getByRole("textbox").fill("pig")
     await page.getByRole("button",{name: "Save"}).click()
-    await page.waitForTimeout(500)  //timeout added for Save action to complete
     await expect(page.getByRole("textbox").last()).toHaveValue("pig")  
 
     page.on('dialog', dialog =>{
