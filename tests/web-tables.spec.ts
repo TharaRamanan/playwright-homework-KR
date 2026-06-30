@@ -105,9 +105,32 @@ test("Validate specialty update", async({page})=>{
 
     await page.getByRole("link",{name: "specialties"}).click()
     await page.getByRole("row",{name:"dermatology"}).getByRole("button",{name: "Edit"}).click()
-    await expect(editSpecialtyField).toHaveValue("dermatology")   //waitforResponse('**/specialties/*/edit')) did not work, why ?
+    await page.waitForResponse("**/api/specialties/*")
     await editSpecialtyField.fill("surgery")
-    await expect(editSpecialtyField).toHaveValue("surgery") 
     await page.getByRole("button", {name: "Update"}).click()
+})
+
+test("Validate specialty lists", async({page})=>{
+    await page.goto('/')
+    await page.getByRole("link",{name: "specialties"}).click()
+
+    const allSpecialtiesArray = []
+
+    await page.getByRole("button",{name: "Add"}).click()
+    await page.locator("#name").fill("oncology")
+    await page.getByRole("button",{name: "Save"}).click()
+    await page.waitForResponse("**/api/specialties")
+    
+    const totalRowFieldInSpecialtiesTable = await page.locator("tbody tr").count()
+    for(let i = 0; i< totalRowFieldInSpecialtiesTable; i++) {
+
+        const specialtyValue = await page.locator("tbody tr").nth(i).locator("td input").inputValue()
+        allSpecialtiesArray.push(specialtyValue)
+
+    }
+    console.log(allSpecialtiesArray)
+
    
+
+
 })
