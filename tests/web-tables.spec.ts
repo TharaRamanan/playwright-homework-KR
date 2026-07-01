@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-
 test.describe("Pet Owners", () => {
-
 test.beforeEach( async({page}) => {
     await page.goto('/')
     await page.getByRole('button', {name: "Owners"}).click()
@@ -133,7 +131,7 @@ test("Validate specialty lists", async({page})=>{
     await page.getByRole('link', { name: 'All' }).click()
     await vetSharonJRow.getByRole("button", {name:"Edit Vet"}).click()
     await page.locator(".dropdown-arrow").click()
-    
+
     const dropdownOptions = page.locator(".dropdown-content label")
     const dropdownOptionsArray = await dropdownOptions.allInnerTexts()
     expect(dropdownOptionsArray).toEqual(allSpecialtiesArray)
