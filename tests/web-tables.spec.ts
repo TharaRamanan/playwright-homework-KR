@@ -115,6 +115,7 @@ test("Validate specialty lists", async({page})=>{
     await page.getByRole("link",{name: "specialties"}).click()
 
     const allSpecialtiesArray = []
+    const vetSharonJRow = page.getByRole("row",{name: "Sharon Jenkins"})
 
     await page.getByRole("button",{name: "Add"}).click()
     await page.locator("#name").fill("oncology")
@@ -126,11 +127,27 @@ test("Validate specialty lists", async({page})=>{
 
         const specialtyValue = await page.locator("tbody tr").nth(i).locator("td input").inputValue()
         allSpecialtiesArray.push(specialtyValue)
-
     }
-    console.log(allSpecialtiesArray)
 
+    await page.getByRole('button',{name: "Veterinarians"}).click()
+    await page.getByRole('link', { name: 'All' }).click()
+    await vetSharonJRow.getByRole("button", {name:"Edit Vet"}).click()
+    await page.locator(".dropdown-arrow").click()
+    
+    const dropdownOptions = page.locator(".dropdown-content label")
+    const dropdownOptionsArray = await dropdownOptions.allInnerTexts()
+    expect(dropdownOptionsArray).toEqual(allSpecialtiesArray)
+
+    await page.getByRole("checkbox", {name: "oncology"}).check()
+    await page.locator(".dropdown-arrow").click()
+    await page.getByRole("button",{name: "Save Vet"}).click()
+    expect(await vetSharonJRow.locator("td").nth(1).innerText()).toEqual("oncology")
+
+    await page.getByRole("link",{name: "specialties"}).click()
+    await page.getByRole("row",{name: "oncology"}).getByRole("button", {name: "Delete"}).click()
+
+    await page.getByRole('button',{name: "Veterinarians"}).click()
+    await page.getByRole('link', { name: 'All' }).click()
+    expect(await vetSharonJRow.locator("td").nth(1).innerText()).toEqual("")
    
-
-
 })
