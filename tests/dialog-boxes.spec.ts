@@ -18,12 +18,14 @@ test('Add and delete Pet type', async ({page}) => {
 
     await newPetTypeSection.getByRole("textbox").fill("pig")
     await page.getByRole("button",{name: "Save"}).click()
+    await page.waitForResponse("**/api/pettypes")
     await expect(page.getByRole("textbox").last()).toHaveValue("pig")  
 
     page.on('dialog', dialog =>{
         expect(dialog.message()).toEqual("Delete the pet type?")
         dialog.accept() 
     })
+
     await page.getByRole("button",{name: "Delete"}).last().click()
     await page.waitForResponse('**/pettypes/*')
     await expect(page.getByRole("textbox").last()).not.toHaveValue("pig")
