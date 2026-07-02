@@ -41,7 +41,7 @@ test('Select all specialties', async ({page}) => {
         await expect(speciality).toBeChecked()
     }
     await selectedSpecialties.click()
-    await expect(selectedSpecialties).toHaveText("surgery, dentistry, radiology")
+    await expect(selectedSpecialties).toHaveText("surgery, radiology, dentistry")
 
 })
 
