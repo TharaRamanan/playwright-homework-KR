@@ -27,7 +27,8 @@ test.describe("Pet Owners", () => {
             await page.getByRole("button", { name: "Find Owner" }).click()
             await page.waitForResponse("**/owners*")
             if (owner == "Playwright") {
-                await expect(page.getByText('No owners with LastName starting with "Playwright"')).toBeVisible()
+                await expect(page.locator("app-owner-list div").last()).toContainText('No owners with LastName starting with "Playwright"')
+
             }
             else {
                 await expect(page.getByRole("row", { name: owner }).locator("td").first()).toContainText(owner)
