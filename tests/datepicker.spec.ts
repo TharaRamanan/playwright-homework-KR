@@ -36,27 +36,59 @@ test("Select the desired date in the calendar", async ({ page }) => {
 
     await jinoPetSection.getByRole("button", { name: "Delete Pet" }).click()
     await page.waitForResponse("**/api/pets/*")
-    await expect(page.locator("app-pet-list:visible")).not.toContainText("Jino") 
+    await expect(page.locator("app-pet-list:visible")).not.toContainText("Jino")
 })
 
 
 test("Select the dates of visits and validate dates order", async ({ page }) => {
+    const date = new Date()
+    const currentDay = String(date.getDate()).padStart(2, '0')
+    const currentMonth = String(date.getMonth() + 1).padStart(2, '0')
+    const currentyear = date.getFullYear()
+    const expectedDate = `${currentyear}-${currentMonth}-${currentDay}`
 
-    
+    const pastDate = new Date()
+    pastDate.setDate(pastDate.getDate() - 45)
+    const retroMonth = String(pastDate.getMonth() + 1).padStart(2, '0')
+    const retroDate = String(pastDate.getDate()).padStart(2, '0')
+    const retroYear = pastDate.getFullYear()
+
+    const petSamanthaSection = page.locator("app-pet-list", { hasText: "Samantha" })
+
     await page.getByRole("link", { name: "Jean Coleman" }).click()
-    await page.locator("app-pet-list",{hasText: "Samantha"}).getByRole("button",{name: "Add Visit"}).click()
+    await petSamanthaSection.getByRole("button", { name: "Add Visit" }).click()
     await page.getByRole("button", { name: "Open calendar" }).click()
     await page.locator(".mat-calendar-body-today").click()
     await expect(page.locator('[name="date"]')).toHaveValue(/^\d{4}\/\d{2}\/\d{2}$/)
-    const expectedDate = await page.locator('[name="date"]').inputValue()
     await page.locator('[name="description"]').fill("Annual checkup")
-    await page.getByRole("button", {name: "Add Visit"}).click()
+    await page.getByRole("button", { name: "Add Visit" }).click()
     await page.waitForResponse("**/api/owners/*")
 
-    const actualDate = await page.locator("app-pet-list",{hasText: "Samantha"}).locator("app-visit-list > table > tr").first().locator("td").first().textContent()
-    
+    const actualDate = await petSamanthaSection.locator("app-visit-list > table > tr").first().locator("td").first().textContent()
+    expect(actualDate).toEqual(expectedDate)
 
+    await petSamanthaSection.getByRole("button", { name: "Add Visit" }).click()
 
+    await page.getByRole("button", { name: "Open calendar" }).click()
+    let currentMonthAndYear = await page.getByRole("button", { name: "Choose month and year" }).textContent()
+    const expectedMonthAndYear = `${retroMonth} ${retroYear}`
 
-   
+    while (currentMonthAndYear != expectedMonthAndYear) {
+        await page.locator("mat-calendar-header").getByRole("button", { name: "Previous month" }).click()
+        currentMonthAndYear = await page.getByRole("button", { name: "Choose month and year" }).textContent()
+    }
+
+    await page.getByRole("button", { name: `${retroYear}/${retroMonth}/${retroDate}` }).click()
+    await page.locator('[name="description"]').fill("Dental work")
+    await page.getByRole("button", { name: "Add Visit" }).click()
+    await page.waitForResponse("**/api/owners/*")
+
+    const rows = await petSamanthaSection.locator("app-visit-list > table > tr").all()
+
+    for (let i = 0; i < rows.length - 1; i++) {
+        const currentDate = new Date(await rows[i].locator("td").first().innerText())
+        const nextDate = new Date(await rows[i + 1].locator("td").first().innerText())
+        expect(currentDate >= nextDate).toBeTruthy()
+    }
+
 })
