@@ -26,7 +26,7 @@ test("Select the desired date in the calendar", async({page}) => {
     }
 
     await page.getByRole("button",{name: "2014/05/02"}).click()
-    expect(await page.locator('[name="birthDate"]').inputValue()).toEqual("2014/05/02")
+    await expect(page.locator('[name="birthDate"]')).toHaveValue("2014/05/02")
     await page.getByRole("button",{name: "Save Pet"}).click()
 
     await expect(jinoPetSection.locator("dd").nth(0)).toHaveText("Jino")
