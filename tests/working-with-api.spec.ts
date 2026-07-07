@@ -10,9 +10,9 @@ test.beforeEach(async ({ page }) => {
 
     })
 
-await page.goto('/')
-await page.getByRole('button', {name: "Owners"}).click()
-await page.getByRole('link', {name: "Search"}).click() 
+    await page.goto('/')
+    await page.getByRole('button', { name: "Owners" }).click()
+    await page.getByRole('link', { name: "Search" }).click()
 
 })
 
