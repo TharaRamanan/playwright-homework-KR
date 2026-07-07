@@ -15,17 +15,7 @@ test("Select the desired date in the calendar", async ({ page }) => {
     await page.getByRole("textbox", { name: "Name" }).fill("Jino")
     await expect(page.locator(".form-group.has-feedback", { hasText: "Name" }).locator(".glyphicon-ok")).toBeVisible()
     await page.locator("#type").selectOption("dog")
-    await page.getByRole("button", { name: "Open calendar" }).click()
-
-    let currentMonthAndYear = await page.getByRole("button", { name: "Choose month and year" }).textContent()
-    const expectedMonthAndYear = "05 2014"
-
-    while (currentMonthAndYear != expectedMonthAndYear) {
-        await page.locator("mat-calendar-header").getByRole("button", { name: "Previous month" }).click()
-        currentMonthAndYear = await page.getByRole("button", { name: "Choose month and year" }).textContent()
-    }
-
-    await page.getByRole("button", { name: "2014/05/02" }).click()
+    await page.locator('[name="birthDate"]').fill("2014/05/02")
     await expect(page.locator('[name="birthDate"]')).toHaveValue("2014/05/02")
     await page.getByRole("button", { name: "Save Pet" }).click()
 
@@ -65,7 +55,15 @@ test("Select the dates of visits and validate dates order", async ({ page }) => 
     await expect(petSamanthaSection.locator("app-visit-list > table > tr").first().locator("td").first()).toHaveText(expectedDate)
 
     await petSamanthaSection.getByRole("button", { name: "Add Visit" }).click()
-    await page.locator('[name="date"]').fill(`${retroYear}/${retroMonth}/${retroDay}`)
+    await page.getByRole("button", { name: "Open calendar" }).click()
+    let currentMonthAndYear = await page.getByRole("button", { name: "Choose month and year" }).textContent()
+    const expectedMonthAndYear = `${retroMonth} ${retroYear}`
+    while (currentMonthAndYear != expectedMonthAndYear) {
+        await page.locator("mat-calendar-header").getByRole("button", { name: "Previous month" }).click()
+        currentMonthAndYear = await page.getByRole("button", { name: "Choose month and year" }).textContent()
+    }
+
+    await page.getByRole("button", { name: `${retroYear}/${retroMonth}/${retroDay}` }).click()
     await page.locator('[name="description"]').fill("Dental work")
     await page.getByRole("button", { name: "Add Visit" }).click()
     await page.waitForResponse("**/api/owners/*")
