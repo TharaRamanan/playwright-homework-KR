@@ -30,13 +30,13 @@ test.describe("Mocking Owner info response", () => {
         await page.getByRole("link", { name: "Kya Clark" }).click()
         //await expect(page.locator(".ownerFullName")).toHaveText("Kya Clark")
         const ownerKyaClarkDetails = ["Kya Clark", "Quality Street", "Cardiff", "9789090475"]
-        let i = 0
-        for (let info of ownerKyaClarkDetails) {
+
+        for (const [i, info] of ownerKyaClarkDetails.entries()) {
 
             await expect(page.locator("app-owner-detail table").first().locator("td").nth(i)).toHaveText(info)
-            i = i + 1
 
         }
+
         await expect(page.locator("app-pet-list")).toHaveCount(2)
         await expect(page.locator("app-pet-list", { hasText: "cat" }).locator("dd").first()).toHaveText("Piper")
         await expect(page.locator("app-pet-list", { hasText: "dog" }).locator("dd").first()).toHaveText("Milo")
@@ -72,11 +72,7 @@ test('Intercept API response', async ({ page }) => {
     await page.getByRole('button', { name: "Veterinarians" }).click()
     await page.getByRole('link', { name: 'All' }).click()
     const sharonSpecialties = ["dermatology", "surgery", "grooming", "dentistry", "therapy", "radiology", "oncology", "nutrition", "cardiology", "neurology"]
-    let i = 0
-    for (let specialties of sharonSpecialties) {
+    for (const [i, specialties] of sharonSpecialties.entries()) {
         await expect(page.locator("tr", { hasText: "Sharon Jenkins" }).locator("td").nth(1).locator("div").nth(i)).toHaveText(specialties)
-        i = i + 1
     }
-
-
 })
