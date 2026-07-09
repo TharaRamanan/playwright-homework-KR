@@ -42,9 +42,7 @@ test('Add and Delete Veterinarian', async ({ page, request }) => {
     await page.getByRole("button", { name: "Save Vet" }).click()
     await expect(page.locator("#vets tbody > tr", { hasText: "Rani Pratap" }).locator("td").nth(1)).toHaveText("dentistry")
 
-    const deleteVetResponse = await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/vets/${newVetID}`, {
-
-    })
+    const deleteVetResponse = await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/vets/${newVetID}`)
 
     expect(deleteVetResponse.status()).toEqual(204)
 
@@ -80,14 +78,10 @@ test('New specialty is displayed', async ({ page, request }) => {
     await page.getByRole("button", { name: "Save Vet" }).click()
     await expect(page.locator("#vets tbody > tr").last().locator("td").nth(1)).toHaveText("api testing ninja")
 
-    const deleteVetResponse = await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/vets/${newVetID}`, {
-
-    })
+    const deleteVetResponse = await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/vets/${newVetID}`)
     expect(deleteVetResponse.status()).toEqual(204)
 
-    const deleteSpecialtyResponse = await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/specialties/${newSpecialtyID}`, {
-
-    })
+    const deleteSpecialtyResponse = await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/specialties/${newSpecialtyID}`)
     expect(deleteSpecialtyResponse.status()).toEqual(204)
 
     await page.getByRole("link", { name: "Specialties" }).click()
