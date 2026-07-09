@@ -1,0 +1,12 @@
+[
+    { "id": 9991, "name": "dermatology" },
+    { "id": 9992, "name": "surgery" },
+    { "id": 9993, "name": "grooming" },
+    { "id": 9994, "name": "dentistry" },
+    { "id": 9995, "name": "therapy" },
+    { "id": 9996, "name": "radiology" },
+    { "id": 9997, "name": "oncology" },
+    { "id": 9998, "name": "nutrition" },
+    { "id": 9999, "name": "cardiology" },
+    { "id": 9990, "name": "neurology" }
+]
