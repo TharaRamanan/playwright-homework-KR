@@ -1,0 +1,99 @@
+[
+    {
+        "firstName": "Kya",
+        "lastName": "Clark",
+        "address": "Quality Street",
+        "city": "Cardiff",
+        "telephone": "9789090475",
+        "id": 12354,
+        "pets": [
+            {
+                "name": "Piper",
+                "birthDate": "2000-09-07",
+                "type": {
+                    "name": "cat",
+                    "id": 4567
+                },
+                "id": 9631,
+                "ownerId": 12354,
+                "visits": []
+            },
+            {
+                "name": "Milo",
+                "birthDate": "2015-04-12",
+                "type": {
+                    "name": "dog",
+                    "id": 2930
+                },
+                "id": 9632,
+                "ownerId": 12354,
+                "visits": []
+            }
+        ]
+    },
+    {
+        "firstName": "Sarah",
+        "lastName": "Thompson",
+        "address": "110 W. Liberty St.",
+        "city": "London",
+        "telephone": "6085551023",
+        "id": 12355,
+        "pets": [
+            {
+                "name": "Luna",
+                "birthDate": "2018-06-15",
+                "type": {
+                    "name": "cat",
+                    "id": 4567
+                },
+                "id": 9633,
+                "ownerId": 12355,
+                "visits": []
+            },
+            {
+                "name": "Max",
+                "birthDate": "2019-02-20",
+                "type": {
+                    "name": "dog",
+                    "id": 2930
+                },
+                "id": 9634,
+                "ownerId": 12355,
+                "visits": []
+            },
+            {
+                "name": "Bella",
+                "birthDate": "2020-11-05",
+                "type": {
+                    "name": "bird",
+                    "id": 2932
+                },
+                "id": 9635,
+                "ownerId": 12355,
+                "visits": []
+            },
+            {
+                "name": "Charlie",
+                "birthDate": "2017-08-30",
+                "type": {
+                    "name": "lizard",
+                    "id": 2933
+                },
+                "id": 9636,
+                "ownerId": 12355,
+                "visits": []
+            },
+            {
+                "name": "Daisy",
+                "birthDate": "2021-03-12",
+                "type": {
+                    "name": "cat",
+                    "id": 4567
+                },
+                "id": 9637,
+                "ownerId": 12355,
+                "visits": []
+            }
+        ]
+    }
+]

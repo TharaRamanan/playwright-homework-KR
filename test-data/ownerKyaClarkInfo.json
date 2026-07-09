@@ -1,0 +1,93 @@
+{
+    "firstName": "Kya",
+    "lastName": "Clark",
+    "address": "Quality Street",
+    "city": "Cardiff",
+    "telephone": "9789090475",
+    "id": 12354,
+    "pets": [
+        {
+            "name": "Piper",
+            "birthDate": "2000-09-07",
+            "type": {
+                "name": "cat",
+                "id": 4567
+            },
+            "id": 9631,
+            "ownerId": 12354,
+            "visits": [
+                {
+                    "date": "2026-06-15",
+                    "description": "Annual checkup",
+                    "id": 6601,
+                    "petId": null
+                },
+                {
+                    "date": "2026-05-20",
+                    "description": "Vaccination booster",
+                    "id": 6602,
+                    "petId": null
+                },
+                {
+                    "date": "2026-04-10",
+                    "description": "Dental cleaning",
+                    "id": 6603,
+                    "petId": null
+                },
+                {
+                    "date": "2026-03-05",
+                    "description": "Eye infection treatment",
+                    "id": 6604,
+                    "petId": null
+                },
+                {
+                    "date": "2026-02-18",
+                    "description": "Flea and tick prevention",
+                    "id": 6605,
+                    "petId": null
+                },
+                {
+                    "date": "2026-01-12",
+                    "description": "Weight check",
+                    "id": 6606,
+                    "petId": null
+                },
+                {
+                    "date": "2025-12-01",
+                    "description": "Blood test",
+                    "id": 6607,
+                    "petId": null
+                },
+                {
+                    "date": "2025-11-08",
+                    "description": "Skin allergy follow-up",
+                    "id": 6608,
+                    "petId": null
+                },
+                {
+                    "date": "2025-10-22",
+                    "description": "Post surgery checkup",
+                    "id": 6609,
+                    "petId": null
+                },
+                {
+                    "date": "2025-09-14",
+                    "description": "Microchip implant",
+                    "id": 6610,
+                    "petId": null
+                }
+            ]
+        },
+        {
+            "name": "Milo",
+            "birthDate": "2015-04-12",
+            "type": {
+                "name": "dog",
+                "id": 2930
+            },
+            "id": 9632,
+            "ownerId": 12354,
+            "visits": []
+        }
+    ]
+}
