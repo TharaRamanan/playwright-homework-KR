@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 import ownersObj from '../test-data/ownersList.json'
-import firstOwnerInfoObj from '../test-data/ownerKyaClarkInfo.json'
+import kyaClarkInfoObj from '../test-data/ownerKyaClarkInfo.json'
 
 test.describe("Mocking Owner info response", () => {
     test.beforeEach(async ({ page }) => {
@@ -18,28 +18,25 @@ test.describe("Mocking Owner info response", () => {
 
     })
 
-    test('mocking API request', async ({ page }) => {
-        await expect(page.locator("#ownersTable").locator("tbody > tr")).toHaveCount(2)
-        await page.route("**/api/owners/*", async route => {
-            await route.fulfill({
-                contentType: "application/json",
-                body: JSON.stringify(firstOwnerInfoObj)
-            })
-
+test('mocking API request', async ({ page }) => {
+    await expect(page.locator("#ownersTable").locator("tbody > tr")).toHaveCount(2)
+    await page.route("**/api/owners/*", async route => {
+        await route.fulfill({
+            contentType: "application/json",
+            body: JSON.stringify(kyaClarkInfoObj)
         })
-        await page.getByRole("link", { name: "Kya Clark" }).click()
-        //await expect(page.locator(".ownerFullName")).toHaveText("Kya Clark")
-        const ownerKyaClarkDetails = ["Kya Clark", "Quality Street", "Cardiff", "9789090475"]
 
-        for (const [i, info] of ownerKyaClarkDetails.entries()) {
+    })
+    await page.getByRole("link", { name: "Kya Clark" }).click()
+    await expect(page.getByRole("row",{name: "Name"}).first()).toContainText(`${kyaClarkInfoObj.firstName} ${kyaClarkInfoObj.lastName}`)
+    await expect(page.getByRole("row",{name: "Address"})).toContainText(kyaClarkInfoObj.address)
+    await expect(page.getByRole("row",{name: "City"})).toContainText(kyaClarkInfoObj.city)
+    await expect(page.getByRole("row",{name: "Telephone"})).toContainText(kyaClarkInfoObj.telephone)
 
-            await expect(page.locator("app-owner-detail table").first().locator("td").nth(i)).toHaveText(info)
 
-        }
-
-        await expect(page.locator("app-pet-list")).toHaveCount(2)
-        await expect(page.locator("app-pet-list", { hasText: "cat" }).locator("dd").first()).toHaveText("Piper")
-        await expect(page.locator("app-pet-list", { hasText: "dog" }).locator("dd").first()).toHaveText("Milo")
+    await expect(page.locator("app-pet-list")).toHaveCount(2)
+    await expect(page.locator("app-pet-list", { hasText: "cat" }).locator("dd").first()).toHaveText("Piper")
+    await expect(page.locator("app-pet-list", { hasText: "dog" }).locator("dd").first()).toHaveText("Milo")
 
         await expect(page.locator("app-pet-list", { hasText: "Piper" }).locator("app-visit-list table > tr")).toHaveCount(10)
 
