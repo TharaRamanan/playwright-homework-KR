@@ -1,10 +1,14 @@
 import { test } from './testFixtures'
-import { expect, request } from '@playwright/test'
+import { expect } from '@playwright/test'
 
-test("Test with Fixtures", async ({ page, newOwnerData, request }) => {
+test("Test with Fixtures", async ({ page, newOwnerData }) => {
 
-    await page.goto("https://petclinic.bondaracademy.com/owners")
-    console.log(newOwnerData.ownerId)
-    await expect(page.getByRole("row").last().locator("td").first()).toHaveText("Rhonda Miles")
-    await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/owners/${newOwnerData.ownerId}`)
+    await page.goto("/owners")
+    await page.getByRole("link",{name: `${newOwnerData.firstname} ${newOwnerData.lastname}`}).click()
+    await page.getByRole("row",{name:"Rino"}).getByRole("button",{name:"Delete Visit"}).click()
+    await page.getByRole("row",{name:"Rino"}).getByRole("button",{name:"Delete Pet"}).click()
+
+    await expect(page.getByRole("row",{name: "Rino"})).toHaveCount(0)
+    await page.getByRole("button",{name: "Back"}).click()
+    
 })
