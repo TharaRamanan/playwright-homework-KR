@@ -19,7 +19,7 @@ test.describe("Mocking Owner info response", () => {
 
     })
 
-    test('mocking API request', async ({ page }) => {
+    test.only('mocking API request', async ({ page }) => {
         await expect(page.locator("#ownersTable").locator("tbody > tr")).toHaveCount(2)
         await page.route("**/api/owners/*", async route => {
             await route.fulfill({
