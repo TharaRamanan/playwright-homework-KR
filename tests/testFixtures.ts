@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 
 
 type testFixture = {
-    newOwnerData: { ownerId: number, petId: number, visitId: number, firstname: string, lastname: string }
+    newOwnerData: { newOwnerId: number, newPetId: number, newVisitId: number, newOwnerFirstName: string, newOwnerLastName: string }
 }
 
 export const test = base.extend<testFixture>({
@@ -12,9 +12,9 @@ export const test = base.extend<testFixture>({
             data: {
                 "firstName": faker.person.firstName(),
                 "lastName": faker.person.lastName(),
-                "address": "Wallace Street",
-                "city": "Bristol",
-                "telephone": "9778487955"
+                "address": faker.location.streetAddress(),
+                "city": faker.location.city(),
+                "telephone": "9789090472"
             }
         })
 
@@ -49,7 +49,7 @@ export const test = base.extend<testFixture>({
         const newVisitCreationResponseJson = await newVisitCreationResponse.json()
         const newVisitId = newVisitCreationResponseJson.id
 
-        await use({ ownerId: newOwnerId, petId: newPetId, visitId: newVisitId, firstname: newOwnerFirstName, lastname: newOwnerLastName })
+        await use({  newOwnerId, newPetId, newVisitId, newOwnerFirstName, newOwnerLastName })
         
         await request.delete(`https://petclinic-api.bondaracademy.com/petclinic/api/owners/${newOwnerId}`)
     }
